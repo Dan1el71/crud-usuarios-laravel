@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\PushMail;
+use Illuminate\Support\Facades\Mail;
 
 class UsuarioController extends Controller
 {
@@ -36,10 +38,13 @@ class UsuarioController extends Controller
                 'correo' => $request->correo,
                 'telefono' => $request->telefono
             ]);
-
+            
+            Mail::to($request->correo)->send(new PushMail($request->nombre));
+            
             return response()->json([
                 'status'=>true,
-                'message' => 'Usuario creado correctamente'
+                'message' => 'Usuario creado correctamente, se ha enviado un correo de confirmacion.',
+                'data' => $usuario
             ],200);
 
         } catch (\Throwable $th){
