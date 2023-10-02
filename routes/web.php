@@ -1,6 +1,5 @@
 <?php
 
-use App\Mail\PushMail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return (new PushMail("Jsadasduan"))->render();
+    return view('welcome');
 });
